@@ -1,0 +1,18 @@
+[
+  "event LiquidityAdded(bytes32 indexed,address indexed,address indexed,uint256)",
+  "event PoolIssued(bytes32 indexed,address indexed,address indexed,uint256,address)",
+  "function addLiquidity(bytes32,uint256,address,address)",
+  "function batchTransferFeeClaim(tuple(address,address,uint256)[])",
+  "function claimFee(address,address)",
+  "function createContingentPool(tuple(string,uint96,uint256,uint256,uint256,uint256,uint256,address,address,uint256,address,address,address)) returns (bytes32)",
+  "function getClaim(address,address) view returns (uint256)",
+  "function getFees(uint48) view returns (tuple(uint256,uint96,uint96))",
+  "function getOwner() view returns (address)",
+  "function getPoolParameters(bytes32) view returns (tuple(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint96,address,uint96,address,uint96,address,uint48,uint48,uint8,string))",
+  "function getPoolParametersByAddress(address) view returns (tuple(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,uint96,address,uint96,address,uint96,address,uint48,uint48,uint8,string))",
+  "function getTreasuryInfo() view returns (address, address, uint256)",
+  "function redeemPositionToken(address,uint256)",
+  "function removeLiquidity(bytes32,uint256)",
+  "function setFinalReferenceValue(bytes32,uint256,bool)",
+  "function transferFeeClaim(address,address,uint256)"
+]
