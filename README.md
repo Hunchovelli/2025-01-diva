@@ -1,98 +1,127 @@
 # AaveDIVAWrapper
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit)
+[//]: # (contest-details-open)
 
-A connector between [DIVA Protocol](https://github.com/divaprotocol/diva-protocol-v1) and [Aave V3](https://github.com/aave-dao/aave-v3-origin.git) that enables yield generation on DIVA Protocol pool collateral.
+### Prize Pool TO BE FILLED OUT BY CYFRIN
 
-## Documentation
+- Total Pool - 
+- H/M -  
+- Low - 
 
-- [Main Documentation](./DOCUMENTATION.md)
-- [Test Cases](./test/Tests.md)
+- Starts: 
+- Ends: 
 
-## Installation
+- nSLOC: 
 
-It is recommended to install [`pnpm`](https://pnpm.io) through the `npm` package manager, which comes bundled with [Node.js](https://nodejs.org/en) when you install it on your system. It is recommended to use a Node.js version `>= 20.0.0`.
+## About
 
-Once you have `npm` installed, you can run the following both to install and upgrade `pnpm`:
+AaveDIVAWrapper is a smart contract that acts as a **connector between [DIVA Protocol](https://github.com/divaprotocol/diva-protocol-v1/blob/main/DOCUMENTATION.md) and [Aave V3](https://discord.com/channels/602826299974877205/636902500041228309/1251248830767169729)**, allowing assets deposited into DIVA Protocol pools to **generate yield by supplying them on Aave V3**. The generated **yield is claimable by the owner** of the AaveDIVAWrapper contract.
 
-```console
-npm install -g pnpm
+The AaveDIVAWrapper contract was originally designed for DIVA Donate on Arbitrum, a parametric conditional donations platform, which aims to use the yield to purchase insurance policies to increase donation payouts beyond users' initial contributions. However, the contract can be utilized for any other use case enabled by DIVA Protocol (e.g., prediction markets, structured products, etc.).
+
+### Relevant links
+
+#### AaveDIVAWrapper:
+- [AaveDIVAWrapper Documentation (Github)](../DOCUMENTATION.md)
+- [AaveDIVAWrapper Codebase](https://github.com/Walodja1987/AaveDIVAWrapper)
+
+#### DIVA Donate:
+- [DIVA Donate Website/App](https://www.divadonate.xyz/)
+- [DIVA Donate Documentation (Gitbook)](https://docs.divadonate.xyz/)
+- [DIVA Donate App Codebase](https://github.com/Walodja1987/DIVA-Donate-App)
+
+#### DIVA Protocol:
+- [DIVA Protocol Website](https://www.divaprotocol.io/)
+- [DIVA Protocol Documentation (Github)](https://github.com/divaprotocol/diva-protocol-v1/blob/main/DOCUMENTATION.md)
+- [DIVA Protocol Documentation (Gitbook)](https://docs.divaprotocol.io/)
+- [DIVA Protocol Codebase](https://github.com/divaprotocol/diva-protocol-v1)
+
+#### Aave:
+- [Aave Website](https://aave.com/)
+- [Aave V3 Documentation](https://aave.com/docs)
+- [Aave V3 Codebase](https://github.com/aave/aave-v3-origin)
+
+## Actors
+
+Actors:
+- **Users:** Can create pools, add/remove liquidity, redeem position tokens, and convert wrapped collateral tokens back to the original token.
+- **Owner:** Can register collateral tokens and claim yield generated from Aave deposits.
+- **Data providers/oracles:** Resolve pools by reporting the outcome via DIVA Protocol.
+
+[//]: # (contest-details-close)
+
+[//]: # (scope-open)
+
+## Scope (contracts)
+
+The following contracts in `contracts/src/` are in scope:
+
+```js
+src/
+├── AaveDIVAWrapper.sol
+├── AaveDIVAWrapperCore.sol
+├── WToken.sol
+├── interfaces
+│   └── IAave.sol
+│   └── IAaveDIVAWrapper.sol
+│   └── IDIVA.sol
+│   └── IWToken.sol
+
 ```
 
-After having installed `pnpm`, simply run:
+## Compatibilities
 
-```console
-pnpm install
-```
+AaveDIVAWrapper contract will be deployed on EVM-compatible chains where both DIVA Protocol and Aave V3 are available. These include:
 
-## Deployment
-
-To deploy your own instance of AaveDIVAWrapper, you'll need:
-
-1. The address of [DIVA Protocol](https://github.com/divaprotocol/diva-protocol-v1/blob/main/DOCUMENTATION.md#contract-addresses) on your target network.
-2. The address of [Aave V3 Pool contract](https://aave.com/docs/resources/addresses) on your target network.
-3. The address that should receive the yield (owner).
-
-### Configuration
-
-1. Set up your environment variables:
-```console
-npx hardhat vars set PRIVATE_KEY
-```
-
-You can learn more about hardhat variables [here](https://hardhat.org/hardhat-runner/docs/guides/configuration-variables).
-
-You can also run `npx hardhat vars setup` to see which other configuration variables are available.
-
-2. Configure your API keys for contract verification in the `hardhat.config.ts` file.
-
-### Deploy
-
-Deploy to your chosen network using one of the following commands:
-
-```console
-pnpm deploy:ethmain         # Ethereum Mainnet
-pnpm deploy:arbitrummain    # Arbitrum
-pnpm deploy:polygon         # Polygon
-pnpm deploy:gnosis          # Gnosis Chain
-pnpm deploy:sepolia         # Ethereum Sepolia (Testnet)
-```
-
-Note: Both DIVA Protocol and Aave V3 are currently available on the following networks:
-
-**Mainnets:**
 - Ethereum Mainnet
 - Polygon
 - Arbitrum One
 - Gnosis Chain
+- Ethereum Sepolia (Testnet)
 
-**Testnets:**
-- Ethereum Sepolia
+Supported collateral tokens:
+- Any ERC20 token supported by Aave V3, but mainly stablecoins like USDC, USDT are expected to be used for DIVA Donate.
+- Fee-on-transfer and rebaseable tokens are NOT supported.
+- Tokens must have between 6-18 decimals.
 
-If you wish to deploy to a network that is not listed above, reach out to the [DIVA Protocol Discord](https://discord.gg/v4KYKms6zh) to request support.
+[//]: # (scope-close)
 
-### Contract Verification
+[//]: # (getting-started-open)
 
-The contract will be verified automatically on the network it is deployed to (see [deploy/deployAaveDIVAWrapper.ts](./deploy/deployAaveDIVAWrapper.ts) script).
+## Setup
 
-### Register collateral token
+Install `pnpm` (if not already installed):
 
-After contract deployment, the owner must register collateral tokens (e.g., USDT or USDC) that will be used with the wrapper. Only [tokens supported by Aave V3](https://www.config.fyi/) can be registered. This is a required first step before the wrapper can be used.
+```bash
+npm install -g pnpm
+```
 
-You can find example code for registering tokens in the `registerCollateralToken` function within the [deploy/deployAaveDIVAWrapper.ts](./deploy/deployAaveDIVAWrapper.ts) script.
+Build:
+```bash
+pnpm install
+```
 
-### Using a Ledger Hardware Wallet
+Configuration:
+```bash
+npx hardhat vars set PRIVATE_KEY
+```
 
-This template implements the [`hardhat-ledger`](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-ledger) plugin. Run `npx hardhat set LEDGER_ACCOUNT` and enter the address of the Ledger account you want to use.
-
-## Testing
-
-To run the tests:
-
-```console
+Tests:
+```bash
 pnpm test:hh
 ```
 
-## License
+[//]: # (getting-started-close)
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+[//]: # (known-issues-open)
+
+## Known Issues
+
+- The AaveDIVAWrapper contract becomes useable only after the owner has registered collateral tokens post contract deployment.
+- Aave V3 is upgradeable and could introduce breaking changes, though the risk is deemed low as AaveDIVAWrapper only uses core functions.
+- Integration risk with both Aave V3 and DIVA Protocol - vulnerabilities in either protocol may affect AaveDIVAWrapper.
+- Fee-on-transfer and rebaseable tokens are not supported but also not prevented on code level (same as in Aave V3).
+- Direct ETH deposits are not supported (requires wrapper contract).
+- Yield rounding issues could temporarily prevent yield claims if aToken balance becomes smaller than wToken supply.
+
+[//]: # (known-issues-close)
