@@ -1,17 +1,17 @@
 # AaveDIVAWrapper
 
+### Prize Pool
+
+- Total Pool - $15,000
+- H/M -  $14,000
+- Low - $1,000
+
+- Starts: January 24, 2025 Noon UTC
+- Ends: January 31, 2025 Noon UTC
+
+- nSLOC: 519
+
 [//]: # (contest-details-open)
-
-### Prize Pool TO BE FILLED OUT BY CYFRIN
-
-- Total Pool - 
-- H/M -  
-- Low - 
-
-- Starts: 
-- Ends: 
-
-- nSLOC: 
 
 ## About
 
